@@ -1,0 +1,47 @@
+type Event = record {
+  id : text;
+  status : text;
+  endDate : text;
+  ownerId : text;
+  assetDescription : text;
+  image : text;
+  maxNFTs : text;
+  eventName : text;
+  startDate : text;
+  eventTime : text;
+};
+type EventPayload = record {
+  status : text;
+  endDate : text;
+  ownerId : text;
+  assetDescription : text;
+  image : text;
+  maxNFTs : text;
+  eventName : text;
+  startDate : text;
+  eventTime : text;
+};
+type NFT = record {
+  id : text;
+  eventId : text;
+  owner : text;
+  used : bool;
+  imageUrl : text;
+};
+type _AzleResult = variant { Ok : vec NFT; Err : text };
+type _AzleResult_1 = variant { Ok : Event; Err : text };
+type _AzleResult_2 = variant { Ok : vec Event; Err : text };
+service : () -> {
+  buyNFTsForEvent : (text, text, float64) -> (_AzleResult);
+  createEvent : (EventPayload) -> (_AzleResult_1);
+  deleteEvent : (text, text) -> (_AzleResult_1);
+  endEvent : (text, text) -> (_AzleResult_1);
+  getAllEvents : () -> (_AzleResult_2) query;
+  getAllNFTs : () -> (_AzleResult) query;
+  getEventById : (text) -> (_AzleResult_1) query;
+  getEventsByStatus : (text) -> (_AzleResult_2) query;
+  getNFTsForEventForUser : (text, text) -> (_AzleResult) query;
+  getOwnersEvents : (text) -> (_AzleResult_2) query;
+  updateEvent : (text, text, EventPayload) -> (_AzleResult_1);
+  verifyNFTsForEvent : (text, text) -> (_AzleResult) query;
+}
